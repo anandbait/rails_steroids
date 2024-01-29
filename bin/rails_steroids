@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+banner = <<-BANNER
+    ____        _ __        _____ __                  _     __
+   / __ \____ _(_) /____   / ___// /____  _________  (_)___/ /____
+  / /_/ / __ `/ / / ___/   \__ \/ __/ _ \/ ___/ __ \/ / __  / ___/
+ / _, _/ /_/ / / (__  )   ___/ / /_/  __/ /  / /_/ / / /_/ (__  )
+/_/ |_|\__,_/_/_/____/   /____/\__/\___/_/   \____/_/\__,_/____/
+BANNER
+
+puts banner
+
+File.expand_path("../lib", __dir__).tap do |lib|
+  $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+end
+
+require "rails_steroids/cli"
+
+RailsSteroids::CLI.start(ARGV)

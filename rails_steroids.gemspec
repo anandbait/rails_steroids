@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "This gem provides some commands to quickly implement regularly used features."
   spec.description = "This gem will be like steroids taken by athletes. It provides some commands to quickly implement regularly used features to boost your productivity and speed of development."
-  spec.homepage = "anandbait.github.io/rails_steroids"
+  spec.homepage = "https://github.com/anandbait/rails_steroids"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0").reject do |f|
-      (File.expand_path(f) == __FILE__) || f.start_with?(*%w[bin/ test/ spec/ features/ .git])
+      (File.expand_path(f) == __FILE__) || f.start_with?(*%w[test/ spec/ features/ .git])
     end
   end
   spec.bindir = "bin"
@@ -30,9 +30,11 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  # spec.add_runtime_dependency "example-gem", "~> 1.0"
+  spec.add_runtime_dependency "railties"
+  spec.add_dependency "thor"
+  spec.add_dependency "rails"
 
-  # spec.add_development_dependency "example-gem", "~> 1.0"
+
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop", "~> 1.21"
