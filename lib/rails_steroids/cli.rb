@@ -14,7 +14,7 @@ module RailsSteroids
       Rails::Generators.invoke(generator, options)
     end
 
-    desc "prepare STEROID", "Scaffolds steroid template for developing a new steroid integration"
+    desc "prepare STEROID", "Scaffolds steroid template for developing a new steroid recipe"
     def prepare(steroid)
       Rails::Generators.invoke('steroid', [steroid])
     end
