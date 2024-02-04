@@ -47,6 +47,7 @@ rails_steroids list
 
 | Functionality | Command |
 |---|---|
+|new_project|`rails_steroids inject steroid:new_project`|
 
 ## Development
 

@@ -25,6 +25,7 @@ module RailsSteroids
       puts "| Functionality | Command |"
       puts "|---|---|"
       steroid_names = [
+        'new_project',
       ]
       steroid_names.each do |steroid|
         puts "|#{steroid.titlecase}|`rails_steroids inject steroid:#{steroid}`|"

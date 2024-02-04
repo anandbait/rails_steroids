@@ -1,0 +1,26 @@
+Description:
+    `steroid:new_project` will inject New Project functionality.
+
+Usage Example:
+    # with installed gem
+    rails_steroids inject steroid:new_project
+    # with bundler
+    bin/rails g steroid:new_project
+
+What will this do?:
+    Create new Rails application with configurations selected interactively.
+    Current options available to customize are:
+        * Ruby version
+        * Rails version
+        * Database: mysql, trilogy, postgresql, sqlite3, oracle, sqlserver, jdbcmysql, jdbcsqlite3, jdbcpostgresql, jdbc
+        * Asset Pipeline: sprockets, propshaft
+        * CSS Processor: tailwind, bootstrap, bulma, postcss, sass
+        * Javascript Approach: importmap, bun, webpack, esbuild, rollup
+        * API only mode
+        * Skip Jbuilder
+        * Skip git init, .gitignore and .gitattributes
+        * Skip Dockerfile, .dockerignore and bin/docker-entrypoint
+        * Skip Action Cable files
+        * Skip Hotwire integration
+        * Skip test files
+        * Skip system test files

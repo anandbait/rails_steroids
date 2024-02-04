@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_steroids (0.1.0)
+    rails_steroids (0.2.0)
       rails
       railties
       thor

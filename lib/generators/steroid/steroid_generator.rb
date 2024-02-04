@@ -6,12 +6,12 @@ class SteroidGenerator < Rails::Generators::NamedBase
       # frozen_string_literal: true
 
       module Steroid
-        class #{name.titlecase}Generator < Rails::Generators::Base
+        class #{name.camelize}Generator < Rails::Generators::Base
           desc "Adds #{name.titlecase} to the application"
           source_root File.expand_path("templates", __dir__)
 
           def add_#{name}
-            say "Injecting steroid: #{name.titlecase}"
+            say "Injecting steroid: #{name.titlecase}", :green
             # Add your other code here or any additional methods below this method
           end
         end
