@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'tty/prompt'
+
 module Steroid
   class NewProjectGenerator < Rails::Generators::Base
     desc "Adds New Project to the application"
@@ -7,42 +9,50 @@ module Steroid
 
     def add_new_project
       say "Injecting steroid: New Project"
-      project_name = ask("What is the great name of your Rails project?")
-      project_name_underscored = project_name.underscore
-      empty_directory project_name_underscored
-      ruby_version = ask("Which Ruby version would you like to use?").strip
-      create_file "#{project_name_underscored}/.ruby_version" do
+      prompt = TTY::Prompt.new
+      project_name = prompt.ask("What is the great name of your Rails project?") do |q|
+        q.required true
+        q.modify :remove
+      end
+      empty_directory project_name
+
+      ruby_version = prompt.ask("Which Ruby version would you like to use?") do |q|
+        q.required true
+        q.modify :remove
+      end
+      create_file "#{project_name}/.ruby-version" do
         ruby_version
       end
-      run "cd #{project_name_underscored}"
+
       cmd = ["rails"]
-      current_rails_version = `rails --version`.gsub('Rails ', '')
-      rails_version = ask("Which Rails version would you like to use? You can find Rails version from https://rubygems.org/gems/rails/versions. Current default version is #{current_rails_version}")
-      rails_version = rails_version.present? ? rails_version : current_rails_version
+      current_rails_version = `rails --version`.gsub('Rails ', '').strip
+      rails_version = prompt.ask("Which Rails version would you like to use? You can find Rails version from https://rubygems.org/gems/rails/versions.", default: current_rails_version)
       cmd << "_#{rails_version}_"
       cmd << "new"
       cmd << project_name
 
-      database_name = ask("Choose your database (options: mysql, trilogy, postgresql, sqlite3, oracle, sqlserver, jdbcmysql, jdbcsqlite3, jdbcpostgresql, jdbc)") 
+      database_options = %w(mysql trilogy postgresql sqlite3 oracle sqlserver jdbcmysql jdbcsqlite3 jdbcpostgresql jdbc)
+      database_name = prompt.select("Choose your database:", database_options) 
       cmd << "--database #{database_name}"
 
-      asset_pipeline = ask("Choose your asset pipeline (options: sprockets, propshaft)")
+      asset_pipeline = prompt.select("Choose your asset pipeline:", %w(sprockets propshaft))
       cmd << "--asset-pipeline #{asset_pipeline}"
 
-      css = ask("Choose CSS processor (options: tailwind, bootstrap, bulma, postcss, sass)")
+      css = prompt.select("Choose CSS processor:", %w(tailwind bootstrap bulma postcss sass))
       cmd << "--css #{css}"
 
-      js = ask("Choose JavaScript approach (options: importmap, bun, webpack, esbuild, rollup)")
+      js = prompt.select("Choose JavaScript approach:", %w(importmap bun webpack esbuild rollup))
       cmd << "--javascript #{js}"
 
-      cmd << "--api" if yes?("API only application? (yes/no)")
-      cmd << "--skip-jbuilder" if yes?("Skip jbuilder? (yes/no)")
-      cmd << "--skip-git" if yes?("Skip git init, .gitignore and .gitattributes? (yes/no)")
-      cmd << "--skip-docker" if yes?("Skip Dockerfile, .dockerignore and bin/docker-entrypoint? (yes/no)")
-      cmd << "--skip-action-cable" if yes?("Skip Action Cable files? (yes/no)")
-      cmd << "--skip-hotwire" if yes?("Skip Hotwire integration? (yes/no)")
-      cmd << "--skip-test" if yes?("Skip test files? (yes/no)")
-      cmd << "--skip-system-test" if yes?("Skip system test files? (yes/no)")
+      boolean_choices = choices = [{name: "yes", value: true}, {name: "no", value: false}]
+      cmd << "--api" if prompt.select("API only application?", choices)
+      cmd << "--skip-jbuilder" if prompt.select("Skip jbuilder?", choices)
+      cmd << "--skip-git" if prompt.select("Skip git init, .gitignore and .gitattributes?", choices)
+      cmd << "--skip-docker" if prompt.select("Skip Dockerfile, .dockerignore and bin/docker-entrypoint?", choices)
+      cmd << "--skip-action-cable" if prompt.select("Skip Action Cable files?", choices)
+      cmd << "--skip-hotwire" if prompt.select("Skip Hotwire integration?", choices)
+      cmd << "--skip-test" if prompt.select("Skip test files?", choices)
+      cmd << "--skip-system-test" if prompt.select("Skip system test files?", choices)
       cmd << "--no-rc"
       run cmd.join(" ")
     end

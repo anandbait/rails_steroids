@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.3.0] - 2024-02-05
+
+- Improvement in steroid recipe new_project : Use of TTY-prompt for better interaction
+
 ## [0.2.0] - 2024-02-04
 
 - New steroid recipe: new_project (create new Rails project interactively)
