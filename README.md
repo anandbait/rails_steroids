@@ -11,9 +11,9 @@
 
 Any small idea evolves when it actually starts taking shape. But most of the time, when we think of developing an idea as a POC or hobby project, we end up spending more time in setting up the project and lose the momentum. And you must have realised that many tasks that we do with a new project from scratch are quite repetitive. 
 
-Rails templates and other templating gems are a way of quickly generating an application but when it comes to adding some features in an already generated application then we need some way to do that. We have certain inbuilt generators which can be used for basic components but they need more coding over it.
+Rails templates and other templating gems are a way of quickly generating an application but when it comes to adding some features in an already generated application then we need some way to do that. We have certain inbuilt generators which can be used for basic components but they need more coding over it. Also remembering options is a also a task or you will have to go through documentation to select options to be provided to generators.
 
-So here are steroids for your application, which are actually generators with special powers. This gem contains different steroids which will setup commonly used features very quickly and reduce your coding work so that you can focus on your precious idea.
+So here are steroids for your application, which are actually generators with special powers. This gem contains different steroids which will run generators interactively help you choose options and so you will not have to remember them. Going forward the gem will also contain steroids which will setup commonly used features and functionalities from gems very quickly and reduce your coding work so that you can focus on your precious idea. Using these steroids is also very good for those who are learning Rails newly as you get to use generators interactively
 
 ## Installation
 
@@ -33,15 +33,17 @@ gem install rails_steroids
 ## Usage
 
 You can use the gem from command line using gem's CLI.
-You can inject the steroid into your application using command like:
-```
-rails_steroids inject steroid:STEROID_NAME
-```
 
 You can check the list of available steroids using command:
 ```
 rails_steroids list
 ```
+
+You can inject the steroid into your application using command like:
+```
+rails_steroids inject steroid:STEROID_NAME
+```
+and then enjoy easily entering or selecting options interactively to the questions asked on terminal.
 
 ## Available Steroids
 

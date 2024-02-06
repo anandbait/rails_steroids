@@ -1,5 +1,5 @@
 Description:
-    `steroid:new_project` will inject New Project functionality.
+    `steroid:new_project` will create New Project interactively.
 
 Usage Example:
     # with installed gem

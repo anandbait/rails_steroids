@@ -28,7 +28,7 @@ class SteroidGenerator < Rails::Generators::NamedBase
   def create_usage_file
     create_file "lib/generators/steroid/#{name}/USAGE", <<~RUBY
       Description:
-          `steroid:#{name}` will inject #{name.titlecase} functionality.
+          `steroid:#{name}` will inject #{name.titlecase} functionality interactively.
 
       Usage Example:
           # with installed gem

@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Documentation improvement
+
 ## [0.3.1] - 2024-02-06
 
 - Improvement in steroid recipe new_project : Code improvement (variable name for boolean_choices)
