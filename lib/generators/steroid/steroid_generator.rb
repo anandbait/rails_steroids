@@ -36,7 +36,7 @@ class SteroidGenerator < Rails::Generators::NamedBase
           # with bundler
           bin/rails g steroid:#{name}
 
-      This will create:
+      What will this do?:
           what/will/it/create
     RUBY
   end

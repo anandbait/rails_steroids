@@ -1,0 +1,22 @@
+Description:
+    `steroid:model` will create Model interactively.
+
+Usage Example:
+    # with installed gem
+    rails_steroids inject steroid:model
+    # with bundler
+    bin/rails g steroid:model
+
+What will this do?:
+    Create new Rails model with configurations selected interactively.
+    Current options available to customize are:
+        * Model name
+        * Specify columns with column type and some other metadata
+        * Column metadata includes:
+            - limit for integer, string, text, binary
+            - precision and scale for decimal
+            - polymorphic for references
+            - index and unique index
+        * Skip creating migration?
+        * Skip created_at, updated_at timestamps?
+        * Skip indexes?

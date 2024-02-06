@@ -49,6 +49,7 @@ and then enjoy easily entering or selecting options interactively to the questio
 
 | Functionality | Command |
 |---|---|
+|model|`rails_steroids inject steroid:model`|
 |controller|`rails_steroids inject steroid:controller`|
 |new_project|`rails_steroids inject steroid:new_project`|
 

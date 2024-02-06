@@ -24,7 +24,7 @@ module Steroid
 
       custom_actions = []
       while prompt.select("Would you like to add more actions?", boolean_choices)
-        custom_actions << prompt.ask("specify name of action:") do |q|
+        custom_actions << prompt.ask("Specify name of action:") do |q|
           q.required true
           q.modify :remove
         end

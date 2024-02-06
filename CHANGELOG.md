@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.5.0] - 2024-02-06
+
+- New steroid recipe: model (Create new model interactively)
+
 ## [0.4.0] - 2024-02-06
 
 - New steroid recipe: controller (Create new controller interactively)
