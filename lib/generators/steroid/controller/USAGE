@@ -1,0 +1,17 @@
+Description:
+    `steroid:controller` will create Controller interactively.
+
+Usage Example:
+    # with installed gem
+    rails_steroids inject steroid:controller
+    # with bundler
+    bin/rails g steroid:controller
+
+What will this do?:
+    Create new Rails controller with configurations selected interactively.
+    Current options available to customize are:
+        * Controller name
+        * Choose from actions: index, show, new, edit, create, update, destroy
+        * Specify any custom/additional actions
+        * Skip adding routes
+        * Skip creating helper
