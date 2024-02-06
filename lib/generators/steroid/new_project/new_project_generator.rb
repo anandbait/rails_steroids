@@ -44,16 +44,17 @@ module Steroid
       js = prompt.select("Choose JavaScript approach:", %w(importmap bun webpack esbuild rollup))
       cmd << "--javascript #{js}"
 
-      boolean_choices = choices = [{name: "yes", value: true}, {name: "no", value: false}]
-      cmd << "--api" if prompt.select("API only application?", choices)
-      cmd << "--skip-jbuilder" if prompt.select("Skip jbuilder?", choices)
-      cmd << "--skip-git" if prompt.select("Skip git init, .gitignore and .gitattributes?", choices)
-      cmd << "--skip-docker" if prompt.select("Skip Dockerfile, .dockerignore and bin/docker-entrypoint?", choices)
-      cmd << "--skip-action-cable" if prompt.select("Skip Action Cable files?", choices)
-      cmd << "--skip-hotwire" if prompt.select("Skip Hotwire integration?", choices)
-      cmd << "--skip-test" if prompt.select("Skip test files?", choices)
-      cmd << "--skip-system-test" if prompt.select("Skip system test files?", choices)
-      cmd << "--no-rc"
+      boolean_choices = [{name: "yes", value: true}, {name: "no", value: false}]
+      cmd << "--api" if prompt.select("API only application?", boolean_choices)
+      cmd << "--skip-jbuilder" if prompt.select("Skip jbuilder?", boolean_choices)
+      cmd << "--skip-git" if prompt.select("Skip git init, .gitignore and .gitattributes?", boolean_choices)
+      cmd << "--skip-docker" if prompt.select("Skip Dockerfile, .dockerignore and bin/docker-entrypoint?", boolean_choices)
+      cmd << "--skip-action-cable" if prompt.select("Skip Action Cable files?", boolean_choices)
+      cmd << "--skip-hotwire" if prompt.select("Skip Hotwire integration?", boolean_choices)
+      cmd << "--skip-test" if prompt.select("Skip test files?", boolean_choices)
+      cmd << "--skip-system-test" if prompt.select("Skip system test files?", boolean_choices)
+      cmd << "--no-rc" # To skip configurations from .railsrc
+      cmd << "--skip" # To skip overriding existing files
       run cmd.join(" ")
     end
   end

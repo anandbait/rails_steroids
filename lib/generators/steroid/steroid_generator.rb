@@ -5,6 +5,8 @@ class SteroidGenerator < Rails::Generators::NamedBase
     create_file "lib/generators/steroid/#{name}/#{name}_generator.rb", <<~RUBY
       # frozen_string_literal: true
 
+      require 'tty/prompt'
+
       module Steroid
         class #{name.camelize}Generator < Rails::Generators::Base
           desc "Adds #{name.titlecase} to the application"
