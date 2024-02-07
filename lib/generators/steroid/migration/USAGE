@@ -1,0 +1,21 @@
+Description:
+    `steroid:migration` will create Migration interactively.
+
+Usage Example:
+    # with installed gem
+    rails_steroids inject steroid:migration
+    # with bundler
+    bin/rails g steroid:migration
+
+What will this do?:
+    Create new Rails migration with configurations selected interactively.
+    Current options available to customize are:
+        * Create table, Create join table and Drop table
+        * Specify columns with column type and some other metadata
+        * Column metadata includes:
+            - limit for integer, string, text, binary
+            - precision and scale for decimal
+            - polymorphic for references
+            - index and unique index
+            - id column, custom join table name for join table creation
+            - Addition to original migration generator is we can set default value as well

@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.6.0] - 2024-02-07
+
+- New steroid recipe: migration (Create new migration interactively)
+
 ## [0.5.0] - 2024-02-06
 
 - New steroid recipe: model (Create new model interactively)

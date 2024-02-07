@@ -25,6 +25,7 @@ module RailsSteroids
       puts "| Functionality | Command |"
       puts "|---|---|"
       steroid_names = [
+        'migration',
         'model',
         'controller',
         'new_project',
