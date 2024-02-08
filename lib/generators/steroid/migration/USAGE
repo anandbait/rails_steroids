@@ -19,3 +19,7 @@ What will this do?:
             - index and unique index
             - id column, custom join table name for join table creation
             - Addition to original migration generator is we can set default value as well
+        * Modify table with
+            - add_column, remove_column
+            - add_index, remove_index
+            - add_remove, remove_reference
