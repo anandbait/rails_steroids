@@ -13,8 +13,7 @@ module Steroid
     include ActiveRecord::Migration::JoinTable
 
     def add_migration
-      say "Injecting steroid: Migration", :green
-      cmd = ["rails generate migration"]
+      say "Applying steroid: Migration", [:bold, :magenta]
 
       action_choices = [
         {name: 'Create table', value: 'create_table'},
@@ -22,39 +21,39 @@ module Steroid
         {name: 'Drop table', value: 'drop_table'},
         {name: 'Modify table columns/index', value: 'modify_table'},
       ]
-      @action = prompt.select("What would you like to do?", action_choices)
+      @action = prompt.select("\nWhat would you like to do?", action_choices)
 
       case @action
       when 'create_table'
-        table_name = prompt.ask("What is the name of table to be created?", required: true) { |q| q.modify :remove }
+        table_name = prompt.ask("\nWhat is the name of table to be created?", required: true) { |q| q.modify :remove }
         @content = content_for_create_table(table_name, collect_columns_data)
         migration_template "migration.rb", "#{db_migrate_path}/create_#{table_name}.rb"
       when 'create_join_table'
-        table1_name = prompt.ask("What is the name of first table to be joined?", required: true) { |q| q.modify :remove }
-        table2_name = prompt.ask("What is the name of second table to be joined?", required: true) { |q| q.modify :remove }
-        table_name = prompt.ask("What is the custom name for join table?", default: find_join_table_name(table1_name, table2_name), required: true) { |q| q.modify :remove }
+        table1_name = prompt.ask("\nWhat is the name of first table to be joined?", required: true) { |q| q.modify :remove }
+        table2_name = prompt.ask("\nWhat is the name of second table to be joined?", required: true) { |q| q.modify :remove }
+        table_name = prompt.ask("\nWhat is the custom name for join table?", default: find_join_table_name(table1_name, table2_name), required: true) { |q| q.modify :remove }
         columns_data = []
-        if prompt.select("Add `id` column?", boolean_choices)
+        if prompt.select("\nAdd `id` column?", boolean_choices)
           columns_data << {name: 'id', type: 'primary_key'}
         end
-        if prompt.select("Add index for #{table1_name} foreign_key?", boolean_choices)
+        if prompt.select("\nAdd index for #{table1_name} foreign_key?", boolean_choices)
           columns_data << {name: "#{table1_name.singularize}_id", type: 'index'}
         end
-        if prompt.select("Add index for #{table2_name} foreign_key?", boolean_choices)
+        if prompt.select("\nAdd index for #{table2_name} foreign_key?", boolean_choices)
           columns_data << {name: "#{table2_name.singularize}_id", type: 'index'}
         end
-        if prompt.select("Add composite index for #{table1_name} and #{table2_name} foreign_key?", boolean_choices)
+        if prompt.select("\nAdd composite index for #{table1_name} and #{table2_name} foreign_key?", boolean_choices)
           uniq_index_option = prompt.select("Unique combination index?", boolean_choices) ? {meta: {unique: true}} : {}
           columns_data << {name: ["#{table2_name.singularize}_id", "#{table2_name.singularize}_id"], type: 'index'}.merge(uniq_index_option)
         end
         @content = content_for_create_join_table(table1_name, table2_name, table_name, (columns_data + collect_columns_data))
         migration_template "migration.rb", "#{db_migrate_path}/create_join_table_#{table_name}.rb"
       when 'drop_table'
-        table_name = prompt.ask("What is the name of table to be dropped?", required: true) { |q| q.modify :remove }
+        table_name = prompt.ask("\nWhat is the name of table to be dropped?", required: true) { |q| q.modify :remove }
         @content = content_for_drop_table(table_name)
         migration_template "migration.rb", "#{db_migrate_path}/drop_#{table_name}.rb"
       when 'modify_table'
-        table_name = prompt.ask("What is the name of table to add/remove columns/index?", required: true) { |q| q.modify :remove }
+        table_name = prompt.ask("\nWhat is the name of table to add/remove columns/index?", required: true) { |q| q.modify :remove }
         modify_table_choices = [
           {name: 'Add column', value: 'add_column'}, {name: 'Remove column', value: 'remove_column'},
           {name: 'Add index', value: 'add_index'}, {name: 'Remove index', value: 'remove_index'},
@@ -64,7 +63,7 @@ module Steroid
         ]
         @content = []
         file_name = []
-        while (modify_table_action = prompt.select("What would you like to do?", modify_table_choices)) != 'exit'
+        while (modify_table_action = prompt.select("\nWhat would you like to do?", modify_table_choices)) != 'exit'
           for_removal = modify_table_action.start_with?('remove_')
           if modify_table_action.end_with?('_index') || modify_table_action.end_with?('_reference')
             data = modify_table_action.end_with?('_index') ? ask_index_data(for_removal: for_removal) : ask_reference_data(for_removal: for_removal)
@@ -92,7 +91,7 @@ module Steroid
 
     def collect_columns_data
       columns_data = []
-      while prompt.select("Would you like to add model attributes(columns)?", boolean_choices)
+      while prompt.select("\nWould you like to add model attributes(columns)?", boolean_choices)
         columns_data << ask_column_data
       end
       timestamps_data = ask_timestamps_data
@@ -149,7 +148,6 @@ module Steroid
           column_data[:meta][:index] = prompt.select("Unique index?", boolean_choices) ? :unique : true
         end
       end
-
       column_data.merge!(name: column_name, type: column_type)
       column_data
     end
@@ -179,7 +177,7 @@ module Steroid
     end
 
     def ask_timestamps_data
-      if prompt.select("Add timestamps?", boolean_choices)
+      if prompt.select("\nAdd timestamps?", boolean_choices)
         { type: 'timestamps' }
       end
     end

@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.7.1] - 2024-02-09
+
+- Improvement: Formatting to terminal output for all steroids
+- Improvement: Formatting of `rails_steroids list` output in table format
+- Fix: RailsSteroids Banner display on terminal
+
 ## [0.7.0] - 2024-02-08
 
 - Improvement in steroid recipe: migration

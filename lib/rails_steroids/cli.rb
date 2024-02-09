@@ -21,18 +21,19 @@ module RailsSteroids
 
     desc "list", "Print list of steroids"
     def list
-      puts "RailsSteroids list"
-      puts "| Functionality | Command |"
-      puts "|---|---|"
+      say "RailsSteroids list", [:bold, :cyan]
       steroid_names = [
         'migration',
         'model',
         'controller',
         'new_project',
       ]
+      arr = [['Functionality', 'Command']]
+      arr << ['===============', '================================================']
       steroid_names.each do |steroid|
-        puts "|#{steroid.titlecase}|`rails_steroids inject steroid:#{steroid}`|"
+        arr << [steroid.titlecase, "`rails_steroids inject steroid:#{steroid}`"]
       end
+      print_table(arr, {borders: true})
       # TODO: Glob all file and prepare a list of available generators
     end
 

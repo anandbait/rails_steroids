@@ -13,7 +13,7 @@ class SteroidGenerator < Rails::Generators::NamedBase
           source_root File.expand_path("templates", __dir__)
 
           def add_#{name}
-            say "Injecting steroid: #{name.titlecase}", :green
+            say "Applying steroid: #{name.titlecase}", [:bold, :magenta]
             # Add your other code here or any additional methods below this method
           end
         end

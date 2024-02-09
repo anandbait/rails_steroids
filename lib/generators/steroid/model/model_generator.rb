@@ -8,10 +8,10 @@ module Steroid
     source_root File.expand_path("templates", __dir__)
 
     def add_model
-      say "Injecting steroid: Model", :green
+      say "Applying steroid: Model", [:bold, :magenta]
       cmd = ["rails generate model"]
       prompt = TTY::Prompt.new
-      model_name = prompt.ask("What is the great name of your model?") do |q|
+      model_name = prompt.ask("\nWhat is the great name of your model?") do |q|
         q.required true
         q.modify :remove
       end
@@ -20,7 +20,7 @@ module Steroid
       boolean_choices = [{name: "yes", value: true}, {name: "no", value: false}]
 
       columns = []
-      while prompt.select("Would you like to add model attributes(columns)?", boolean_choices)
+      while prompt.select("\nWould you like to add model attributes(columns)?", boolean_choices)
 
         column_name = prompt.ask("Specify name of column:") do |q|
           q.required true
@@ -67,9 +67,9 @@ module Steroid
       end
       cmd += columns
 
-      cmd << "--no-migration" if prompt.select("Skip migration?", boolean_choices)
-      cmd << "--no-timestamps" if prompt.select("Skip created_at, updated_at timestamps?", boolean_choices)
-      cmd << "--no-indexes" if prompt.select("Skip indexes?", boolean_choices)
+      cmd << "--no-migration" if prompt.select("\nSkip migration?", boolean_choices)
+      cmd << "--no-timestamps" if prompt.select("\nSkip created_at, updated_at timestamps?", boolean_choices)
+      cmd << "--no-indexes" if prompt.select("\nSkip indexes?", boolean_choices)
 
       run cmd.join(" ")
     end
