@@ -1,4 +1,4 @@
-class SteroidGenerator < Rails::Generators::NamedBase
+class SteroidGenerator < Rails::Generators::Base
 
   def create_steroid_generator_file
     say "Preparing steroid for #{name.titlecase}", :green
@@ -9,8 +9,16 @@ class SteroidGenerator < Rails::Generators::NamedBase
 
       module Steroid
         class #{name.camelize}Generator < Rails::Generators::Base
-          desc "Adds #{name.titlecase} to the application"
+          include RailsSteroids::Base
+          desc File.read("#{__dir__}/USAGE")
           source_root File.expand_path("templates", __dir__)
+
+          def help
+            if ['-h', 'help', '--help'].include?(ARGV.last)
+              puts File.read("#{__dir__}/USAGE")
+              exit
+            end
+          end
 
           def add_#{name}
             say "Applying steroid: #{name.titlecase}", [:bold, :magenta]

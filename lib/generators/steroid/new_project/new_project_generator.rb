@@ -4,22 +4,24 @@ require 'tty/prompt'
 
 module Steroid
   class NewProjectGenerator < Rails::Generators::Base
-    desc "Adds New Project to the application"
+    include RailsSteroids::Base
+    desc File.read("#{__dir__}/USAGE")
     source_root File.expand_path("templates", __dir__)
+
+    def help
+      if ['-h', 'help', '--help'].include?(ARGV.last)
+        puts File.read("#{__dir__}/USAGE")
+        exit
+      end
+    end
 
     def add_new_project
       say "Applying steroid: New Project", [:bold, :magenta]
-      prompt = TTY::Prompt.new
-      project_name = prompt.ask("\nWhat is the great name of your Rails project?") do |q|
-        q.required true
-        q.modify :remove
-      end
+
+      project_name = prompt.ask("\nWhat is the great name of your Rails project?", required: true) { |q| q.modify :remove }
       empty_directory project_name
 
-      ruby_version = prompt.ask("\nWhich Ruby version would you like to use?") do |q|
-        q.required true
-        q.modify :remove
-      end
+      ruby_version = prompt.ask("\nWhich Ruby version would you like to use?", required: true) { |q| q.modify :remove }
       create_file "#{project_name}/.ruby-version" do
         ruby_version
       end
@@ -44,7 +46,6 @@ module Steroid
       js = prompt.select("\nChoose JavaScript approach:", %w(importmap bun webpack esbuild rollup))
       cmd << "--javascript #{js}"
 
-      boolean_choices = [{name: "yes", value: true}, {name: "no", value: false}]
       cmd << "--api" if prompt.select("\nAPI only application?", boolean_choices)
       cmd << "--skip-jbuilder" if prompt.select("\nSkip jbuilder?", boolean_choices)
       cmd << "--skip-git" if prompt.select("\nSkip git init, .gitignore and .gitattributes?", boolean_choices)

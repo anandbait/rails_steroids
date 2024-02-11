@@ -4,28 +4,28 @@ require 'tty/prompt'
 
 module Steroid
   class ModelGenerator < Rails::Generators::Base
-    desc "Adds Model to the application"
+    include RailsSteroids::Base
+    desc File.read("#{__dir__}/USAGE")
     source_root File.expand_path("templates", __dir__)
+
+    def help
+      if ['-h', 'help', '--help'].include?(ARGV.last)
+        puts File.read("#{__dir__}/USAGE")
+        exit
+      end
+    end
 
     def add_model
       say "Applying steroid: Model", [:bold, :magenta]
       cmd = ["rails generate model"]
-      prompt = TTY::Prompt.new
-      model_name = prompt.ask("\nWhat is the great name of your model?") do |q|
-        q.required true
-        q.modify :remove
-      end
-      cmd << model_name
 
-      boolean_choices = [{name: "yes", value: true}, {name: "no", value: false}]
+      model_name = prompt.ask("\nWhat is the great name of your model?", required: true) { |q| q.modify :remove }
+      cmd << model_name
 
       columns = []
       while prompt.select("\nWould you like to add model attributes(columns)?", boolean_choices)
 
-        column_name = prompt.ask("Specify name of column:") do |q|
-          q.required true
-          q.modify :remove
-        end
+        column_name = prompt.ask("Specify name of column:", required: true) { |q| q.modify :remove }
 
         column_type = prompt.select("Choose type of column:", %w(references integer decimal float boolean binary string text date time datetime primary_key digest token))
 
@@ -34,8 +34,7 @@ module Steroid
         end
         if %w(integer string text binary).include?(column_type)
           if prompt.select("Set limit?", boolean_choices)
-            limit = prompt.ask("Specify limit:") do |q|
-              q.required true
+            limit = prompt.ask("Specify limit:", required: true) do |q|
               q.modify :remove
               q.convert(:int, "Invalid input! Please provide integer value.")
             end
@@ -44,13 +43,11 @@ module Steroid
         end
         if column_type == 'decimal'
           if prompt.select("Set precision & scale?", boolean_choices)
-            precision = prompt.ask("Specify precision:") do |q|
-              q.required true
+            precision = prompt.ask("Specify precision:", required: true) do |q|
               q.modify :remove
               q.convert(:int, "Invalid input! Please provide integer value.")
             end
-            scale = prompt.ask("Specify scale:") do |q|
-              q.required true
+            scale = prompt.ask("Specify scale:", required: true) do |q|
               q.modify :remove
               q.convert(:int, "Invalid input! Please provide integer value.")
             end

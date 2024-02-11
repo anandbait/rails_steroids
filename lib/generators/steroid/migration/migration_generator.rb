@@ -7,10 +7,19 @@ require 'rails/generators/active_record/migration'
 
 module Steroid
   class MigrationGenerator < Rails::Generators::Base
-    desc "Adds Migration to the application"
-    source_root File.expand_path("templates", __dir__)
+    include RailsSteroids::Base
     include ActiveRecord::Generators::Migration
     include ActiveRecord::Migration::JoinTable
+
+    desc File.read("#{__dir__}/USAGE")
+    source_root File.expand_path("templates", __dir__)
+
+    def help
+      if ['-h', 'help', '--help'].include?(ARGV.last)
+        puts File.read("#{__dir__}/USAGE")
+        exit
+      end
+    end
 
     def add_migration
       say "Applying steroid: Migration", [:bold, :magenta]
@@ -80,14 +89,6 @@ module Steroid
     end
 
     private
-
-    def prompt
-      TTY::Prompt.new
-    end
-
-    def boolean_choices
-      [{name: "yes", value: true}, {name: "no", value: false}]
-    end
 
     def collect_columns_data
       columns_data = []

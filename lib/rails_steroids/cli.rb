@@ -7,6 +7,7 @@ require_relative "../rails_steroids"
 module RailsSteroids
   class CLI < Thor
     map %w(--version -v) => :version
+    map %w(--help -h) => :help
 
     desc "inject STEROID [options]", "Add steroid into the application"
     def inject(generator, *options)
@@ -39,6 +40,11 @@ module RailsSteroids
 
     desc "--version, -v", "Print gem version"
     def version
+      puts "RailsSteroids v#{RailsSteroids::VERSION}"
+    end
+
+    desc "--help, -h", "Print help"
+    def help
       puts "RailsSteroids v#{RailsSteroids::VERSION}"
     end
 
